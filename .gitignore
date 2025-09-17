@@ -1,0 +1,41 @@
+### Maven ###
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+### Logs ###
+*.log
+
+### IntelliJ IDEA ###
+.idea/
+*.iws
+*.iml
+*.ipr
+
+### VS Code ###
+.vscode/
+
+### Eclipse/STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans/
+.sts4-cache/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+### SO ###
+.DS_Store
+Thumbs.db
+
+### Configuración sensible ###
+application.properties
+application.yml
+
