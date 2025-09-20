@@ -1,5 +1,6 @@
 package com.fernando.todo.service;
 
+import com.fernando.todo.exception.RecursoNoEncontradoException;
 import com.fernando.todo.model.Tarea;
 import com.fernando.todo.repository.TareaRepository;
 import org.springframework.stereotype.Service;
@@ -18,8 +19,9 @@ public class TareaService {
         return tareaRepository.findAll();
     }
 
-    public Optional<Tarea> buscarPorId(Long id) {
-        return tareaRepository.findById(id);
+    public Tarea buscarPorIdOrThrow(Long id) {
+        return tareaRepository.findById(id)
+                .orElseThrow(()-> new RecursoNoEncontradoException("Tarea con id: " + id + " no encontrada"));
     }
 
     public Tarea guardarTarea(Tarea tarea) {
@@ -27,7 +29,8 @@ public class TareaService {
     }
 
     public void eliminarPorId(Long id) {
-        tareaRepository.deleteById(id);
+        Tarea existente = buscarPorIdOrThrow(id);
+        tareaRepository.delete(existente);
     }
 
 
