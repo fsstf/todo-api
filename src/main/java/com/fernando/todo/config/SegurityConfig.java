@@ -2,7 +2,9 @@ package com.fernando.todo.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -28,9 +30,16 @@ public class SegurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+
+                        .requestMatchers(HttpMethod.GET, "/api/tareas/**").hasAnyRole("USER", "ADMIN")
+
+                        .requestMatchers(HttpMethod.POST, "/api/tareas/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/tareas/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/tareas/**").hasRole("ADMIN")
+
                         .anyRequest().authenticated()
                 )
                 .httpBasic(basic -> {});
