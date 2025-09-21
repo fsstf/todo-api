@@ -1,5 +1,6 @@
 package com.fernando.todo.service;
 
+import com.fernando.todo.dto.TareaDTO;
 import com.fernando.todo.exception.RecursoNoEncontradoException;
 import com.fernando.todo.model.Tarea;
 import com.fernando.todo.repository.TareaRepository;
@@ -31,6 +32,24 @@ public class TareaService {
     public void eliminarPorId(Long id) {
         Tarea existente = buscarPorIdOrThrow(id);
         tareaRepository.delete(existente);
+    }
+
+    public Tarea toEntity(TareaDTO dto){
+        return Tarea.builder()
+                .titulo(dto.titulo())
+                .descripcion(dto.descripcion())
+                .estado(dto.estado())
+                .fechaLimite(dto.fechaLimite())
+                .build();
+    }
+
+    public TareaDTO toDTO(Tarea tarea){
+        return new TareaDTO(
+                tarea.getTitulo(),
+                tarea.getDescripcion(),
+                tarea.getEstado(),
+                tarea.getFechaLimite()
+        );
     }
 
 

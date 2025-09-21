@@ -1,5 +1,6 @@
 package com.fernando.todo.controller;
 
+import com.fernando.todo.dto.TareaDTO;
 import com.fernando.todo.model.Tarea;
 import com.fernando.todo.service.TareaService;
 import jakarta.validation.Valid;
@@ -18,7 +19,7 @@ public class TareaController {
     }
 
     @GetMapping
-    public List<Tarea> listarTareas() {
+    public List<Tarea> listar() {
         return tareaService.listarTareas();
     }
 
@@ -29,24 +30,26 @@ public class TareaController {
     }
 
     @PostMapping
-    public Tarea crearTarea(@RequestBody @Valid Tarea tarea) {
-        return tareaService.guardarTarea(tarea);
+    public ResponseEntity<Tarea> crear(@RequestBody @Valid TareaDTO dto) {
+        Tarea tarea = tareaService.toEntity(dto);
+        Tarea guardada = tareaService.guardarTarea(tarea);
+        return ResponseEntity.ok(guardada);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Tarea> atualizarPorId(@PathVariable Long id, @RequestBody @Valid Tarea tarea) {
+    public ResponseEntity<Tarea> atualizar(@PathVariable Long id, @RequestBody @Valid TareaDTO dto) {
         Tarea existente = tareaService.buscarPorIdOrThrow(id);
-        existente.setTitulo(tarea.getTitulo());
-        existente.setDescripcion(tarea.getDescripcion());
-        existente.setEstado(tarea.getEstado());
-        existente.setFechaLimite(tarea.getFechaLimite());
-        Tarea actualizada = tareaService.guardarTarea(existente);
+        existente.setTitulo(dto.titulo());
+        existente.setDescripcion(dto.descripcion());
+        existente.setEstado(dto.estado());
+        existente.setFechaLimite(dto.fechaLimite());
 
+        Tarea actualizada = tareaService.guardarTarea(existente);
         return ResponseEntity.ok(actualizada);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarPorId(@PathVariable Long id) {
+    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         tareaService.eliminarPorId(id);
         return ResponseEntity.noContent().<Void>build();
     }
