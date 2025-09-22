@@ -19,6 +19,6 @@ public record TareaDTO (
         @NotNull(message = "el estado es obligatorio")
         Estado estado,
 
-        @FutureOrPresent(message = "La fecha limite no puede ser del pasado")
+        @FutureOrPresent(message = "la fecha limite no puede ser del pasado")
         LocalDateTime fechaLimite
 ){}

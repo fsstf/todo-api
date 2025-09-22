@@ -22,16 +22,16 @@ public class Tarea {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "El titulo no puede estar vacio")
-    @Size(max = 150, message = "El titulo no puede superar los 150 caracteres")
+    @NotBlank(message = "el titulo no puede estar vacio")
+    @Size(max = 150, message = "el titulo no puede superar los 150 caracteres")
     @Column(nullable = false, length = 100)
     private String titulo;
 
-    @Size(max = 500, message = "La desccripción no puede superar los 500 caracteres")
+    @Size(max = 500, message = "la desccripción no puede superar los 500 caracteres")
     @Column(columnDefinition = "TEXT")
     private String descripcion;
 
-    @NotNull(message = "El estado es obligarotorio")
+    @NotNull(message = "el estado es obligarotorio")
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Estado estado;
@@ -40,7 +40,7 @@ public class Tarea {
     @Builder.Default
     private LocalDateTime fechaCreacion = LocalDateTime.now();
 
-    @FutureOrPresent(message = "La fecha limite no puede ser del pasado")
+    @FutureOrPresent(message = "la fecha limite no puede ser del pasado")
     @Column(name = "fecha_limite")
     private LocalDateTime fechaLimite;
 }

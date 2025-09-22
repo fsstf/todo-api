@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
 @Service
 public class TareaService {
     private final TareaRepository tareaRepository;
@@ -16,16 +17,16 @@ public class TareaService {
         this.tareaRepository = tareaRepository;
     }
 
-    public List<Tarea> listarTareas() {
+    public List<Tarea> listar() {
         return tareaRepository.findAll();
     }
 
     public Tarea buscarPorIdOrThrow(Long id) {
         return tareaRepository.findById(id)
-                .orElseThrow(()-> new RecursoNoEncontradoException("Tarea con id: " + id + " no encontrada"));
+                .orElseThrow(()-> new RecursoNoEncontradoException("tarea con id: " + id + " no encontrada"));
     }
 
-    public Tarea guardarTarea(Tarea tarea) {
+    public Tarea guardar(Tarea tarea) {
         return tareaRepository.save(tarea);
     }
 

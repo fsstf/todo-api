@@ -20,7 +20,7 @@ public class TareaController {
 
     @GetMapping
     public List<Tarea> listar() {
-        return tareaService.listarTareas();
+        return tareaService.listar();
     }
 
     @GetMapping("/{id}")
@@ -32,7 +32,7 @@ public class TareaController {
     @PostMapping
     public ResponseEntity<Tarea> crear(@RequestBody @Valid TareaDTO dto) {
         Tarea tarea = tareaService.toEntity(dto);
-        Tarea guardada = tareaService.guardarTarea(tarea);
+        Tarea guardada = tareaService.guardar(tarea);
         return ResponseEntity.ok(guardada);
     }
 
@@ -44,7 +44,7 @@ public class TareaController {
         existente.setEstado(dto.estado());
         existente.setFechaLimite(dto.fechaLimite());
 
-        Tarea actualizada = tareaService.guardarTarea(existente);
+        Tarea actualizada = tareaService.guardar(existente);
         return ResponseEntity.ok(actualizada);
     }
 
